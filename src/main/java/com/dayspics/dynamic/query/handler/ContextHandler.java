@@ -3,6 +3,11 @@ package com.dayspics.dynamic.query.handler;
 import com.dayspics.dynamic.query.Token;
 import com.dayspics.dynamic.query.exception.ParsingException;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class ContextHandler implements IHandler {
 
     private IHandler currentHandler ;

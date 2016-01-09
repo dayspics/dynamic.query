@@ -4,6 +4,11 @@ import com.dayspics.dynamic.query.Characters;
 import com.dayspics.dynamic.query.Token;
 import com.dayspics.dynamic.query.exception.ParsingException;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class InsertFieldHandler extends AbstractHandler {
 
     private StringBuilder builder = new StringBuilder();

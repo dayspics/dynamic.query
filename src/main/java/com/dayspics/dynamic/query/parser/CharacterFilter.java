@@ -9,6 +9,11 @@ import com.dayspics.dynamic.query.handler.ContextHandler;
 import com.dayspics.dynamic.query.handler.OptionalFieldHandler;
 import com.dayspics.dynamic.query.handler.RequiredFieldHandler;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class CharacterFilter {
     
     private ContextHandler contextHandler;

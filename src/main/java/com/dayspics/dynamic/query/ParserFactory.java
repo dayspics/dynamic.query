@@ -7,6 +7,11 @@ import java.util.Map;
 import com.dayspics.dynamic.query.exception.ParsingException;
 import com.dayspics.dynamic.query.parser.Parser;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class ParserFactory {
 
     public static Token creatToken(String sql, Map<String, ?> map) throws ParsingException {

@@ -6,6 +6,11 @@ import java.util.Map;
 
 import com.dayspics.dynamic.query.exception.ParsingException;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class Token {
     
     private Map<String, ?> map;

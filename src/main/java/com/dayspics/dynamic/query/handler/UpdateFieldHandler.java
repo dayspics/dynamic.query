@@ -6,6 +6,11 @@ import com.dayspics.dynamic.query.Characters;
 import com.dayspics.dynamic.query.Token;
 import com.dayspics.dynamic.query.exception.ParsingException;
 
+/**
+ * 
+ * @author zhangcaijie
+ *
+ */
 public class UpdateFieldHandler extends AbstractHandler {
 
     private StringBuilder builder = new StringBuilder();
