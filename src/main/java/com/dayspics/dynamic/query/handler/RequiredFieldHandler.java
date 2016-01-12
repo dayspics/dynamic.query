@@ -23,7 +23,7 @@ public class RequiredFieldHandler extends AbstractHandler {
 
     @Override
     public void putChar(char c) throws ParsingException {
-        if (c != Characters.SPACE) {
+        if (c != Characters.SPACE && c != Characters.CLOSE_PARENTHESIS) {
             builder.append(c);
         } else {
             getField();

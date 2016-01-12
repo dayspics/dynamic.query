@@ -22,10 +22,10 @@ public class CharacterFilter {
     //private char type;
     private int whereLength = 0;
     private int fromLength = 0;
+    private int fromPositon = 0;
     private boolean isSelect = false;
     private boolean isUpdate = false;
     private boolean isInsert = false;
-    private int positon = 0;
     
     public CharacterFilter(Token token) {
         this.token = token;
@@ -39,6 +39,9 @@ public class CharacterFilter {
         if (handleWhere(c)) {
             return;
         }
+        /*if(handleOrder(c)) {
+            return;
+        }*/
         //update和select语句where条件之后的$处理
         if (c == Characters.DOLLAR) {
             if (pre != Characters.SPACE) {
@@ -79,12 +82,19 @@ public class CharacterFilter {
             pre = c;
             return;
         }
+        //select的order by 处理
+        if (isSelect && c == Characters.PERCENT) {
+            contextHandler.setCurrentHandler(contextHandler.getOrderFieldHandler());
+            contextHandler.putChar(c);
+            pre = c;
+            return;
+        }
         contextHandler.putChar(c);
         pre = c;
     }
 
     public boolean handleFrom(char c) throws ParsingException {
-        if(pre == Characters.SPACE && positon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'f') && fromLength == 0) {
+        if(pre == Characters.SPACE && fromPositon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'f') && fromLength == 0) {
             fromLength++;
             contextHandler.putChar(c);
             pre = c;
@@ -92,7 +102,7 @@ public class CharacterFilter {
         }
         switch (fromLength) {
             case 1 :
-                if (Characters.equalsIgnoreCase(pre, 'f') && positon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'r')) {
+                if (Characters.equalsIgnoreCase(pre, 'f') && fromPositon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'r')) {
                     fromLength++;
                     contextHandler.putChar(c);
                     pre = c;
@@ -101,7 +111,7 @@ public class CharacterFilter {
                     fromLength = 0;
                 }
             case 2 :
-                if (Characters.equalsIgnoreCase(pre, 'r') && positon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'o')) {
+                if (Characters.equalsIgnoreCase(pre, 'r') && fromPositon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'o')) {
                     fromLength++;
                     contextHandler.putChar(c);
                     pre = c;
@@ -110,7 +120,7 @@ public class CharacterFilter {
                     fromLength = 0;
                 }
             case 3 :
-                if (Characters.equalsIgnoreCase(pre, 'o') && positon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'm')) {
+                if (Characters.equalsIgnoreCase(pre, 'o') && fromPositon == 0 && isSelect && Characters.equalsIgnoreCase(c, 'm')) {
                     fromLength++;
                     contextHandler.putChar(c);
                     pre = c;
@@ -119,10 +129,10 @@ public class CharacterFilter {
                     fromLength = 0;
                 }
             case 4 :
-                if (Characters.equalsIgnoreCase(pre, 'm') && positon == 0 && isSelect && c == Characters.SPACE) {
+                if (Characters.equalsIgnoreCase(pre, 'm') && fromPositon == 0 && isSelect && c == Characters.SPACE) {
                     fromLength = 0;
                     contextHandler.putCache();
-                    positon = token.length();
+                    fromPositon = token.length();
                     contextHandler.putChar(c);
                     pre = c;
                     return true;
@@ -193,7 +203,6 @@ public class CharacterFilter {
         return false;
     }
     
-    
     public void setMap(Map<String, ?> map) {
         token.setMap(map);
     }
@@ -209,8 +218,8 @@ public class CharacterFilter {
         //如果sql语句以可选参数或必选参数结尾，则在结束时尚未检查字段值，需在此手动调用处理
         contextHandler.end();
         contextHandler.putCache();
-        if(positon > 0) {
-            token.setCountSql(positon);
+        if(fromPositon > 0) {
+            token.setCountSql(fromPositon);
         }
         paging();
     }

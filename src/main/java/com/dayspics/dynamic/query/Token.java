@@ -25,6 +25,10 @@ public class Token {
         cache.append(c);
     }
     
+    public void putString(String str) throws ParsingException {
+        cache.append(str);
+    }
+    
     public void putCache() throws ParsingException {
         putList();
         if(list.size() > 0) {
@@ -96,6 +100,24 @@ public class Token {
     public void clear() {
         if(cache.length() > 0) {
             cache = new StringBuilder();
+        }
+    }
+    
+    public StringBuilder getCache() {
+        return cache;
+    }
+    
+    public void deleteLastWord() {
+        char pre = 0;
+        for(int i = length() - 1; i >= 0; i--) {
+            if(charAt(i) != Characters.SPACE) {
+                pre = charAt(i);
+                sb.deleteCharAt(i);
+            } else if(pre == 0){
+                sb.deleteCharAt(i);
+            } else {
+                break;
+            }
         }
     }
     

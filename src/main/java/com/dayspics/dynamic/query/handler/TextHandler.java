@@ -15,6 +15,7 @@ public class TextHandler extends AbstractHandler {
     private char pre;
     private ContextHandler contextHandler;
     private boolean isStart = false;
+    private StringBuilder builder = new StringBuilder();
     
     public TextHandler(Token token, ContextHandler contextHandler) {
         super(token, contextHandler);
@@ -41,7 +42,15 @@ public class TextHandler extends AbstractHandler {
         if (contextHandler.isDeleConnector()) {
             if (c != Characters.SPACE) {
                 isStart = true;
+                builder.append(c);
             } else {
+                if(!builder.toString().trim().equalsIgnoreCase("and") && !builder.toString().trim().equalsIgnoreCase("or")) {
+                    //需要删除可选参数前面的连接符 'and'或'or'
+                    token.deleteLastWord();
+                    token.putString(builder.toString());
+                    super.putChar(c);
+                    builder = new StringBuilder();
+                }
                 isStart = false;
                 contextHandler.setDeleConnector(false);
             }
@@ -53,6 +62,11 @@ public class TextHandler extends AbstractHandler {
     }
 
     @Override
-    public void end() throws ParsingException {}
+    public void end() throws ParsingException {
+        if(builder.length() > 0 && !builder.toString().trim().equalsIgnoreCase("and") && !builder.toString().trim().equalsIgnoreCase("or")) {
+            token.deleteLastWord();
+            token.putString(builder.toString());
+        }
+    }
 
 }

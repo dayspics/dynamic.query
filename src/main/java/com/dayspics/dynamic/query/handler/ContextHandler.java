@@ -15,6 +15,7 @@ public class ContextHandler implements IHandler {
     private OptionalFieldHandler optionalFieldHandler;
     private InsertFieldHandler insertFieldHandler;
     private UpdateFieldHandler updateFieldHandler;
+    private OrderFieldHandler orderFieldHandler;
     private TextHandler textHandler;
     private boolean isDeleConnector = false;
     
@@ -25,6 +26,7 @@ public class ContextHandler implements IHandler {
         optionalFieldHandler = new OptionalFieldHandler(token, this);
         insertFieldHandler = new InsertFieldHandler(token, this);
         updateFieldHandler = new UpdateFieldHandler(token, this);
+        orderFieldHandler = new OrderFieldHandler(token, this);
     }
     
     @Override
@@ -107,4 +109,12 @@ public class ContextHandler implements IHandler {
         this.updateFieldHandler = updateFieldHandler;
     }
 
+    public OrderFieldHandler getOrderFieldHandler() {
+        return orderFieldHandler;
+    }
+
+    public void setOrderFieldHandler(OrderFieldHandler orderFieldHandler) {
+        this.orderFieldHandler = orderFieldHandler;
+    }
+    
 }

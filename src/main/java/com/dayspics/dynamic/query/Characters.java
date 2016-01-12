@@ -28,13 +28,14 @@ public class Characters {
 	public static final char CLOSE_PARENTHESIS = ')';
 	public static final char START_PARENTHESIS = '(';
 	public static final char END = ';';
+	public static final char PERCENT = '%';
 	
 	/**
 	 * @param c
-	 * @return true if a-z | A-Z | 0-9 | _
+	 * @return true if a-z | A-Z | 0-9 | _ |.
 	 */
 	public static boolean isValidCharOfName(char c) {
-		if (c == '_') {
+		if (c == '_' || c == Characters.DOT) {
 		    return true;
 		}
 		return Character.isLetterOrDigit(c);
