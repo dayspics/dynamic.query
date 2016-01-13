@@ -50,7 +50,7 @@ public class OptionalFieldHandler extends AbstractHandler {
             builder.append(list.get(size - 2));
         }
         String fieldTemp = Characters.convertColumnName(builder.toString());
-        if (token.getMap().get(fieldTemp) == null) {
+        if (token.getMap().containsKey(fieldTemp)) {
             int end = 3;
             //如果要删除的可选参数在结尾，则需要删除可选参数前面的连接符，否则删除后面的连接符
             if(isEnd) {
